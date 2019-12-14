@@ -26,7 +26,7 @@ def post_people():
     max_id = max([p['id'] for p in db_content['people']])
     person_id = max_id + 1
 
-    db_content['people'].peopleend({'id': person_id, **person})
+    db_content['people'].append({'id': person_id, **person})
     update_db(db_content)
     return jsonify({'id': person_id}), 201
 

@@ -6,9 +6,11 @@ __pycache__/
 *$py.class
 
 # Untracked files
-_main.py
+flask_1.py
 rest_api.py
 data.json
+users.py
+flask_2.py
 
 # C extensions
 *.so
@@ -130,4 +132,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
 

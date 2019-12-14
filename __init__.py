@@ -2,7 +2,7 @@ from flask import Flask
 
 from people.routs import people
 from posts.routs import posts
-from main.main import main
+from main import main
 
 app = Flask(__name__)
 
