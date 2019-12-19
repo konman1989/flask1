@@ -19,8 +19,7 @@ class Posts(Resource):
         args = request.get_json()
 
         try:
-            post_id = post_db(**args)
-            return post_id, 201
+            return post_db('posts', **args)
         except TypeError:
             return "Wrong input", 404
 
@@ -37,8 +36,7 @@ class DetailedPosts(Resource):
         args = request.get_json()
 
         try:
-            put_db(post_id, **args)
-            return {}, 204
+            return put_db('posts', post_id, **args)
         except IndexError:
             return 'Not found', 404
 
@@ -46,19 +44,12 @@ class DetailedPosts(Resource):
         args = request.get_json()
 
         try:
-            if patch_db(post_id, **args) is False:
-                return 'Wrong keyword, check your input', 404
-            return {}, 204
+            return patch_db('posts', post_id, **args)
         except TypeError:
             return 'Not found', 404
 
     def delete(self, post_id):
-        result = delete_db_item(post_id)
-
-        if result == 1:
-            return {}, 204
-        else:
-            return 'Not found', 404
+        return delete_db_item('posts', post_id)
 
 
 class Comments(Resource):
@@ -72,6 +63,14 @@ class Comments(Resource):
             return db if db else Response('Not Found', status=404)
         return [dict(post) for post in get_db('comments')]
 
+    def post(self):
+        args = request.get_json()
+
+        try:
+            return post_db('comments', **args)
+        except TypeError:
+            return "Wrong input", 404
+
 
 class DetailedComments(Resource):
 
@@ -80,6 +79,25 @@ class DetailedComments(Resource):
             return get_db_by_id(comment_id, 'comments')
         except TypeError:
             return "Not found", 404
+
+    def put(self, comment_id):
+        args = request.get_json()
+
+        try:
+            return put_db('comments', comment_id, **args)
+        except IndexError:
+            return 'Not found', 404
+
+    def patch(self, comment_id):
+        args = request.get_json()
+
+        try:
+            return patch_db('comments', comment_id, **args)
+        except TypeError:
+            return 'Not found', 404
+
+    def delete(self, comment_id):
+        return delete_db_item('comments', comment_id)
 
 
 class DetailedPostComments(Resource):
